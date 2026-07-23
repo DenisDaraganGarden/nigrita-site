@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIGRITA — редактор архитектурных альбомов</title>
+<meta name="description" content="NIGRITA — редактор вёрстки архитектурных альбомов с ИИ-верстальщиком. Документ как данные, печатный PDF, нативный экспорт в InDesign. Studio Not 0. Not 1.">
+<meta property="og:title" content="NIGRITA — редактор архитектурных альбомов">
+<meta property="og:description" content="Документ как данные. ИИ-верстальщик. Печатный PDF и нативный экспорт в InDesign.">
+<meta property="og:image" content="https://www.nigrita-design.com/spreads/s01.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2317191b'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='18' fill='%23d6d4cf' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#17191b;
+    --bg-soft:#1c1e21;
+    --ink:#d6d4cf;
+    --ink-dim:#8f8d88;
+    --ink-faint:#5c5b57;
+    --rule:rgba(214,212,207,.14);
+    --rule-soft:rgba(214,212,207,.07);
+    --accent:#9c5a44;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .label{
+    font-family:var(--sans);
+    font-size:10.5px;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    font-weight:400;
+  }
+  .rule{border:0;border-top:1px solid var(--rule);margin:0}
+
+  /* ── header ─────────────────────────── */
+  header{padding:34px 0 0;text-align:center}
+
+  /* ── hero ───────────────────────────── */
+  .hero{padding:16vh 0 14vh;text-align:center}
+  .hero h1{
+    font-weight:400;
+    font-size:clamp(44px,8.5vw,96px);
+    letter-spacing:.30em;
+    text-indent:.30em;
+    line-height:1.1;
+    color:var(--ink);
+  }
+  .hero .tagline{
+    margin-top:38px;
+    font-style:italic;
+    font-size:clamp(17px,2.2vw,21px);
+    color:var(--ink-dim);
+  }
+  .hero .edition{margin-top:46px}
+  .hero-rule{
+    width:56px;margin:40px auto 0;
+    border:0;border-top:1px solid var(--accent);
+  }
+
+  /* ── sections ───────────────────────── */
+  section{padding:90px 0}
+  .section-head{display:flex;align-items:baseline;gap:26px;margin-bottom:56px}
+  .section-head .num{
+    font-family:var(--sans);font-size:11px;color:var(--ink-faint);letter-spacing:.2em;
+  }
+  .section-head::after{content:"";flex:1;border-top:1px solid var(--rule-soft);align-self:center}
+
+  /* идея */
+  .idea{max-width:640px}
+  .idea p{margin-bottom:26px;color:var(--ink)}
+  .idea p:last-child{margin-bottom:0}
+  .idea em{color:var(--ink-dim)}
+
+  /* возможности */
+  .features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:44px 40px;
+  }
+  .feature{border-top:1px solid var(--rule);padding-top:20px}
+  .feature .fnum{
+    font-family:var(--sans);font-size:10px;letter-spacing:.25em;color:var(--ink-faint);
+  }
+  .feature h3{
+    font-weight:400;font-size:20px;margin:14px 0 10px;letter-spacing:.02em;
+  }
+  .feature p{font-size:14.5px;line-height:1.6;color:var(--ink-dim)}
+
+  /* галерея */
+  .gallery{display:flex;flex-direction:column;gap:74px}
+  figure{margin:0}
+  figure img{
+    display:block;width:100%;height:auto;
+    box-shadow:0 24px 70px rgba(0,0,0,.55),0 4px 16px rgba(0,0,0,.4);
+  }
+  figcaption{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-top:16px;
+  }
+  figcaption .cap-num{
+    font-family:var(--sans);font-size:10px;letter-spacing:.2em;color:var(--ink-faint);
+  }
+  .gallery-note{
+    margin-top:70px;text-align:center;font-style:italic;color:var(--ink-faint);font-size:15px;
+  }
+
+  /* footer */
+  footer{padding:90px 0 60px;text-align:center}
+  footer .bureau{letter-spacing:.28em;text-indent:.28em;font-size:12px;color:var(--ink)}
+  footer .contacts{margin-top:26px;font-family:var(--sans);font-size:12px;color:var(--ink-dim);letter-spacing:.06em}
+  footer .contacts a{color:var(--ink-dim);text-decoration:none;border-bottom:1px solid var(--rule)}
+  footer .contacts span{margin:0 12px;color:var(--ink-faint)}
+  footer .fine{margin-top:34px;font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
+
+  @media(max-width:820px){
+    .features{grid-template-columns:1fr 1fr}
+    section{padding:64px 0}
+  }
+  @media(max-width:560px){
+    .features{grid-template-columns:1fr}
+    .hero{padding:12vh 0 10vh}
+    .gallery{gap:48px}
+    footer .contacts span{display:block;visibility:hidden;height:8px;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="label">Studio Not 0. Not 1.</span>
+</header>
+
+<div class="hero wrap">
+  <h1>NIGRITA</h1>
+  <p class="tagline">Редактор архитектурных альбомов с ИИ‑верстальщиком</p>
+  <hr class="hero-rule">
+  <p class="edition label">Album vol.1 · Edition 2026</p>
+</div>
+
+<hr class="rule wrap" style="display:block">
+
+<section class="wrap" id="idea">
+  <div class="section-head"><span class="num">01</span><span class="label">Идея</span></div>
+  <div class="idea">
+    <p>Альбом здесь — не набор картинок, а документ. Каждый лист — структурированные данные: вёрстка, стили, объекты и подписи живут в едином дереве, и оно — единственный источник правды.</p>
+    <p>Поэтому альбом можно править тремя руками сразу: вручную на холсте, командой ИИ и кодом. ИИ‑верстальщик не рисует поверх — он вносит в документ проверяемые операции. Невалидное не применяется, любая правка обратима.</p>
+    <p><em>Результат — печатный PDF в полном разрешении и нативный пакет для InDesign: текст остаётся текстом, вектор — вектором.</em></p>
+  </div>
+</section>
+
+<section class="wrap" id="features">
+  <div class="section-head"><span class="num">02</span><span class="label">Возможности</span></div>
+  <div class="features">
+    <div class="feature">
+      <span class="fnum">·01</span>
+      <h3>Документ как данные</h3>
+      <p>Вся вёрстка — структура, а не пиксели. Один источник правды для холста, печати и экспорта.</p>
+    </div>
+    <div class="feature">
+      <span class="fnum">·02</span>
+      <h3>ИИ‑верстальщик</h3>
+      <p>Команды обычным языком. Каждая применяется как строгая проверяемая операция над документом.</p>
+    </div>
+    <div class="feature">
+      <span class="fnum">·03</span>
+      <h3>Журнал и undo</h3>
+      <p>Полная история проекта. Любой шаг — свой и ИИ — откатывается без потерь.</p>
+    </div>
+    <div class="feature">
+      <span class="fnum">·04</span>
+      <h3>Печатный PDF</h3>
+      <p>Печать в высоком разрешении из того же документа, что и экран, — без пересборки макета.</p>
+    </div>
+    <div class="feature">
+      <span class="fnum">·05</span>
+      <h3>Экспорт в InDesign</h3>
+      <p>Нативный IDML: редактируемый текст, векторные пути, маски и шрифты — не растровые слепки.</p>
+    </div>
+    <div class="feature">
+      <span class="fnum">·06</span>
+      <h3>Свет, стекло, зоны</h3>
+      <p>Художественные модули: светильники в метрах, лупа с настоящей оптикой, зонные размывки, 3D‑объекты.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="album">
+  <div class="section-head"><span class="num">03</span><span class="label">Свёрстано в Nigrita</span></div>
+  <div class="gallery">
+    <figure>
+      <img src="spreads/s01.jpg" alt="Обложка альбома Denis Daragan Garden" width="1820" height="1287" loading="eager">
+      <figcaption><span class="label">Обложка</span><span class="cap-num">01 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s02.jpg" alt="Портрет автора" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Портрет автора</span><span class="cap-num">02 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s04.jpg" alt="Манифест: хаос, авангард, порядок" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Манифест</span><span class="cap-num">03 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s07.jpg" alt="Принцип: искажение пространства" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Принцип · Искажение пространства</span><span class="cap-num">04 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s08.jpg" alt="Принцип: гармонизация хаоса" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Принцип · Гармонизация хаоса</span><span class="cap-num">05 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s12.jpg" alt="Фактуры эрозии — контактный лист материалов" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Фактуры эрозии</span><span class="cap-num">06 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s14.jpg" alt="Избранные проекты" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Избранные проекты</span><span class="cap-num">07 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s16.jpg" alt="Визуализация: тропа между стриженых масс" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Визуализация · Глубокий зелёный</span><span class="cap-num">08 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s18.jpg" alt="Разбор проекта: скульптурный сад" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Разбор проекта · Скульптурный сад</span><span class="cap-num">09 / 10</span></figcaption>
+    </figure>
+    <figure>
+      <img src="spreads/s21.jpg" alt="Ориентиры: ландшафт, архитектура, скульптура" width="1820" height="1287" loading="lazy">
+      <figcaption><span class="label">Ориентиры</span><span class="cap-num">10 / 10</span></figcaption>
+    </figure>
+  </div>
+  <p class="gallery-note">Листы авторского альбома, свёрстанного и напечатанного из NIGRITA без единой правки вне программы.</p>
+</section>
+
+<hr class="rule wrap" style="display:block">
+
+<footer class="wrap">
+  <p class="bureau">DENIS DARAGAN GARDEN BUREAU</p>
+  <p class="contacts">
+    <a href="mailto:info@daragangarden.ru">info@daragangarden.ru</a>
+    <span>·</span>
+    <a href="tel:+79996951590">+7 (999) 695‑15‑90</a>
+  </p>
+  <p class="fine">© 2026 Denis Daragan Garden Bureau · Все права защищены</p>
+</footer>
+
+</body>
+</html>
